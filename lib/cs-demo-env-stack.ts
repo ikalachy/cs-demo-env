@@ -84,7 +84,7 @@ export class ContentstackIntegrationEnvStack extends Stack {
         allowOrigins: Cors.ALL_ORIGINS,
       },
       deploy: false,
-      binaryMediaTypes: ['multipart/form-data'e],
+      binaryMediaTypes: ['multipart/form-data'],
     });
 
     // Then create an explicit Deployment construct
