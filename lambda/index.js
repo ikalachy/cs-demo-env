@@ -99,8 +99,8 @@ async function proxyPUT(event) {
       headers: headers,
     });
   } catch (error) {
-    console.log('error put: ', JSON.stringify(error));
-    return response(500, error);
+    // console.log('error put: ', JSON.stringify(error));
+    return response(400, error.message);
   }
 
   console.log('from api : ', JSON.stringify(result.data));
