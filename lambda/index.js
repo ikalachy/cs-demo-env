@@ -77,7 +77,7 @@ async function proxyPOST(event) {
       // transformRequest: (formData) => formData,
     });
   } catch (error) {
-    return response(500, { httpStatus: error.statusCode, errorMessage: error?.message });
+    return response(500, { httpStatus: error.status, errorMessage: error?.message });
   }
 
   // console.log('from api : ', JSON.stringify(result.data));
@@ -99,7 +99,7 @@ async function proxyPUT(event) {
       headers: headers,
     });
   } catch (error) {
-    // console.log('error put: ', JSON.stringify(error));
+    console.log('error put: ', JSON.stringify(error));
     return response(400, { httpStatus: error.statusCode, errorMessage: error?.message });
   }
 
