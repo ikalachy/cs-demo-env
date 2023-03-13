@@ -100,7 +100,8 @@ async function proxyPUT(event) {
     });
   } catch (error) {
     console.log('error put: ', JSON.stringify(error));
-    return response(error.status, error);
+    throw new Error(JSON.stringify(response(error.status, error)));
+    // return response(error.status, error);
   }
 
   console.log('from api : ', JSON.stringify(result.data));
