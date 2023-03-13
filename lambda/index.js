@@ -51,7 +51,7 @@ async function proxyGET(event) {
       },
     });
   } catch (error) {
-    return response(400, { statusCode: error.statusCode, errorMessage: error?.message });
+    return response(400, { httpStatus: error.statusCode, errorMessage: error?.message });
   }
 
   console.log('from api : ', JSON.stringify(result.data));
@@ -77,7 +77,7 @@ async function proxyPOST(event) {
       // transformRequest: (formData) => formData,
     });
   } catch (error) {
-    return response(500, { statusCode: error.statusCode, errorMessage: error?.message });
+    return response(500, { httpStatus: error.statusCode, errorMessage: error?.message });
   }
 
   // console.log('from api : ', JSON.stringify(result.data));
@@ -100,7 +100,7 @@ async function proxyPUT(event) {
     });
   } catch (error) {
     // console.log('error put: ', JSON.stringify(error));
-    return response(400, { statusCode: error.statusCode, errorMessage: error?.message });
+    return response(400, { httpStatus: error.statusCode, errorMessage: error?.message });
   }
 
   console.log('from api : ', JSON.stringify(result.data));
