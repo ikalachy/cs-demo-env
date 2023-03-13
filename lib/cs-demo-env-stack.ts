@@ -22,6 +22,11 @@ export class ContentstackIntegrationEnvStack extends Stack {
 
     this.createIntegrationLambda('dev');
     this.createIntegrationApi('dev');
+
+    this.createIntegrationLambda('prod');
+    this.createIntegrationApi('prod');
+
+
   }
 
   private createIntegrationLambda = (stage: string) => {
