@@ -89,7 +89,7 @@ async function proxyPUT(event) {
   const url = constructProxyUrl(event);
   const headers = constructHeaders(event);
 
-  console.log('POST url', url);
+  console.log('PUT url', url);
   // console.log('POST body', event?.body);
 
   let result = {};
