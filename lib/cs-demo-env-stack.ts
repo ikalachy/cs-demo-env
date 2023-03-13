@@ -112,27 +112,7 @@ export class ContentstackIntegrationEnvStack extends Stack {
   private addProxyApiResources = () => {
     const anyProxy = this.integrationApi.root.addProxy({
       anyMethod: true,
-      defaultIntegration: new LambdaIntegration(this.integrationApiLambda, {
-        integrationResponses: [
-          {
-            // For errors, we check if the error message is not empty, get the error data
-            selectionPattern: '(\n|.)+',
-            // We will set the response status code to 200
-            statusCode: '400',
-            responseTemplates: {
-              'application/json': JSON.stringify({
-                state: 'error',
-                message: "$util.escapeJavaScript($input.path('$.errorMessage'))",
-              }),
-            },
-            responseParameters: {
-              'method.response.header.Content-Type': "'application/json'",
-              'method.response.header.Access-Control-Allow-Origin': "'*'",
-              'method.response.header.Access-Control-Allow-Credentials': "'true'",
-            },
-          },
-        ],
-      }),
+      defaultIntegration: new LambdaIntegration(this.integrationApiLambda),
     });
   };
 }
