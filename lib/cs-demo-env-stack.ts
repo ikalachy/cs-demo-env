@@ -33,7 +33,7 @@ export class ContentstackIntegrationEnvStack extends Stack {
     // TODO: we should provide here only secret names and read them on runtime
     const csApiTokens = secretsmanager.Secret.fromSecretNameV2(
       this,
-      'cs-api-keys',
+      `cs-api-keys-${stage}`,
       `cs-demo-${stage}-contentstack`,
     );
 
@@ -91,7 +91,7 @@ export class ContentstackIntegrationEnvStack extends Stack {
     });
 
     // Then create an explicit Deployment construct
-    const deployment = new Deployment(this, 'IntegrationDeployment', { api: this.integrationApi });
+    const deployment = new Deployment(this, `IntegrationDeployment-${stage}`, { api: this.integrationApi });
 
     // And different stages
     const [apiStage, appStage] = ['v3', 'automations-api'].map(
