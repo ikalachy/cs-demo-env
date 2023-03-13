@@ -20,21 +20,21 @@ export class ContentstackIntegrationEnvStack extends Stack {
   constructor(scope: Construct, id: string, props?: StackProps) {
     super(scope, id, props);
 
-    this.createIntegrationLambda();
-    this.createIntegrationApi();
+    this.createIntegrationLambda('dev');
+    this.createIntegrationApi('dev');
   }
 
-  private createIntegrationLambda = () => {
+  private createIntegrationLambda = (stage: string) => {
     // TODO: we should provide here only secret names and read them on runtime
     const csApiTokens = secretsmanager.Secret.fromSecretNameV2(
       this,
       'cs-api-keys',
-      'cs-demo-dev-contentstack',
+      `cs-demo-${stage}-contentstack`,
     );
 
     this.integrationApiLambda = new cdk.aws_lambda.Function(
       this,
-      'Contentstack-Integration-Lambda',
+      `Contentstack-Integration-Lambda-${stage}`,
       {
         code: cdk.aws_lambda.Code.fromAsset('./lambda'),
         handler: 'index.handler',
@@ -55,11 +55,9 @@ export class ContentstackIntegrationEnvStack extends Stack {
           CONTENTSTACK_AUTOMATIONS_UID: csApiTokens
             .secretValueFromJson('CONTENTSTACK_AUTOMATIONS_UID')
             .unsafeUnwrap(),
-          CONTENTSTACK_ENVIRONMENT: 'development',
 
           CONTENTSTACK_API_HOST: 'api.contentstack.io',
           CONTENTSTACK_APP_HOST: 'app.contentstack.com',
-          // REACT_APP_CONTENTSTACK_MANAGEMENT_TOKEN = your_management_token
         },
       },
     );
@@ -68,10 +66,10 @@ export class ContentstackIntegrationEnvStack extends Stack {
   /*
       API Gateway integration
     */
-  private createIntegrationApi = () => {
+  private createIntegrationApi = (stage: string) => {
     // const api = new apigw.RestApi(this, 'my_api', { deploy: false });
-    this.integrationApi = new RestApi(this, 'Contentstack-API', {
-      description: 'Contentstack Integration API',
+    this.integrationApi = new RestApi(this, `Contentstack-API-${stage}`, {
+      description: `Contentstack Integration API for ${stage}`,
       // deployOptions: {
       //   // stageName: 'v3',
       //   deploy: false,

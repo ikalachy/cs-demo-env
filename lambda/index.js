@@ -51,7 +51,7 @@ async function proxyGET(event) {
       },
     });
   } catch (error) {
-    return response(error.status, error);
+    return response(error.status, error?.message);
   }
 
   console.log('from api : ', JSON.stringify(result.data));
