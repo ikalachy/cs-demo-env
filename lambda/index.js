@@ -106,7 +106,7 @@ async function proxyPUT(event) {
       requestId: '',
       trace: {},
     };
-    throw new Error(JSON.stringify(myErrorObj));
+    return JSON.stringify(myErrorObj);
     // return response(error.status, error);
   }
 
