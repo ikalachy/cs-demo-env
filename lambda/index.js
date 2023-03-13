@@ -100,12 +100,7 @@ async function proxyPUT(event) {
     });
   } catch (error) {
     console.log('error put: ', JSON.stringify(error));
-    var myErrorObj = {
-      statusCode: error.status,
-      errorMessage: error.message,
-    };
-    return JSON.stringify(myErrorObj);
-    // return response(error.status, error);
+    return response(500, error);
   }
 
   console.log('from api : ', JSON.stringify(result.data));
@@ -127,14 +122,6 @@ function response(status, data) {
       'X-Requested-With': '*',
     },
     body: JSON.stringify(data),
-  };
-}
-
-function responseError(status, error) {
-  return {
-    errorType: error,
-    httpStatus: status,
-    // requestId: context.awsRequestId,
   };
 }
 
@@ -203,3 +190,17 @@ const constructAuthHeaders = (event) => {
 
   return auth;
 };
+
+function ErrorResponse(statusCode = 500, message = 'An error occurred') {
+  return {
+    statusCode: statusCode,
+    body: JSON.stringify({ message }),
+    headers: {
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Headers': '*',
+      'Access-Control-Allow-Methods': '*',
+      'Access-Control-Allow-Credentials': true,
+      'Access-Control-Allow-Origin': '*',
+    },
+  };
+}
