@@ -51,7 +51,7 @@ async function proxyGET(event) {
       },
     });
   } catch (error) {
-    return response(error.status, error?.message);
+    return response(400, error?.message);
   }
 
   console.log('from api : ', JSON.stringify(result.data));
@@ -65,8 +65,8 @@ async function proxyPOST(event) {
   const body =
     event.path === '/assets' ? Buffer.from(event.body, 'base64') : JSON.parse(event?.body);
 
-  console.log('POST url', url);
-  console.log('POST headers', JSON.stringify(headers));
+  // console.log('POST url', url);
+  // console.log('POST headers', JSON.stringify(headers));
   // console.log('POST body', event?.body);
 
   let result = {};
@@ -77,10 +77,10 @@ async function proxyPOST(event) {
       // transformRequest: (formData) => formData,
     });
   } catch (error) {
-    return response(error.status, error);
+    return response(500, error);
   }
 
-  console.log('from api : ', JSON.stringify(result.data));
+  // console.log('from api : ', JSON.stringify(result.data));
   return response(200, result.data);
 }
 
@@ -190,17 +190,3 @@ const constructAuthHeaders = (event) => {
 
   return auth;
 };
-
-function ErrorResponse(statusCode = 500, message = 'An error occurred') {
-  return {
-    statusCode: statusCode,
-    body: JSON.stringify({ message }),
-    headers: {
-      'Content-Type': 'application/json',
-      'Access-Control-Allow-Headers': '*',
-      'Access-Control-Allow-Methods': '*',
-      'Access-Control-Allow-Credentials': true,
-      'Access-Control-Allow-Origin': '*',
-    },
-  };
-}
