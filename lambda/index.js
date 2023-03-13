@@ -99,6 +99,7 @@ async function proxyPUT(event) {
       headers: headers,
     });
   } catch (error) {
+    console.log('error put: ', JSON.stringify(error));
     return response(error.status, error);
   }
 
@@ -121,6 +122,14 @@ function response(status, data) {
       'X-Requested-With': '*',
     },
     body: JSON.stringify(data),
+  };
+}
+
+function responseError(status, error) {
+  return {
+    errorType: error,
+    httpStatus: status,
+    // requestId: context.awsRequestId,
   };
 }
 
@@ -178,7 +187,7 @@ const constructAuthHeaders = (event) => {
     access_token: `${CONTENTSTACK_DELIVERY_TOKEN}`,
     api_key: `${CONTENTSTACK_API_KEY}`,
   };
-  
+
   const method = event['httpMethod'];
 
   if (method === 'POST' && currentStage(event) !== V3)
