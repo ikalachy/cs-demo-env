@@ -20,13 +20,12 @@ export class ContentstackIntegrationEnvStack extends Stack {
   constructor(scope: Construct, id: string, props?: StackProps) {
     super(scope, id, props);
 
-    this.createIntegrationLambda('dev');
-    this.createIntegrationApi('dev');
+    console.log('env we use: ', process.env.STAGE);
+    this.createIntegrationLambda(`${process.env.STAGE}`);
+    this.createIntegrationApi(`${process.env.STAGE}`);
 
-    this.createIntegrationLambda('prod');
-    this.createIntegrationApi('prod');
-
-
+    // this.createIntegrationLambda('prod');
+    // this.createIntegrationApi('prod');
   }
 
   private createIntegrationLambda = (stage: string) => {
@@ -91,7 +90,9 @@ export class ContentstackIntegrationEnvStack extends Stack {
     });
 
     // Then create an explicit Deployment construct
-    const deployment = new Deployment(this, `IntegrationDeployment-${stage}`, { api: this.integrationApi });
+    const deployment = new Deployment(this, `IntegrationDeployment-${stage}`, {
+      api: this.integrationApi,
+    });
 
     // And different stages
     const [apiStage, appStage] = ['v3', 'automations-api'].map(
