@@ -100,7 +100,13 @@ async function proxyPUT(event) {
     });
   } catch (error) {
     console.log('error put: ', JSON.stringify(error));
-    throw new Error(JSON.stringify(response(error.status, error)));
+    var myErrorObj = {
+      errorType: 'InternalServerError',
+      httpStatus: error.status,
+      requestId: '',
+      trace: {},
+    };
+    throw new Error(JSON.stringify(myErrorObj));
     // return response(error.status, error);
   }
 
