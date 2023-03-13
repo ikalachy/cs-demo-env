@@ -76,7 +76,7 @@ export class ContentstackIntegrationEnvStack extends Stack {
       //   // stageName: 'v3',
       //   deploy: false,
       // },
-      endpointConfiguration: { types: [EndpointType.REGIONAL] },
+      endpointConfiguration: { types: [EndpointType.EDGE] },
       defaultCorsPreflightOptions: {
         allowHeaders: ['*'],
         allowMethods: Cors.ALL_METHODS,
