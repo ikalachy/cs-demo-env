@@ -2,9 +2,10 @@
 import "source-map-support/register";
 import * as cdk from "aws-cdk-lib";
 import { ContentstackIntegrationEnvStack } from "../lib/cs-demo-env-stack";
+import { PermissionsBoundary } from "../lib/premission-boundary";
 
 const app = new cdk.App();
-new ContentstackIntegrationEnvStack(app, 'Contentstack-Env-Stack', {
+const deployStack =new ContentstackIntegrationEnvStack(app, 'Contentstack-Env-Stack', {
   /* If you don't specify 'env', this stack will be environment-agnostic.
    * Account/Region-dependent features and context lookups will not work,
    * but a single synthesized template can be deployed anywhere. */
@@ -16,3 +17,10 @@ new ContentstackIntegrationEnvStack(app, 'Contentstack-Env-Stack', {
   // env: { account: '837642108960', region: 'eu-north-1' },
   /* For more information, see https://docs.aws.amazon.com/cdk/latest/guide/environments.html */
 });
+
+// for deployment to EPAM accounts only
+cdk.Aspects.of(deployStack).add(
+  new PermissionsBoundary('arn:aws:iam::863151058727:policy/eo_role_boundary'),
+);
+
+cdk.Tags.of(deployStack).add('contentstack-demo', '' );
