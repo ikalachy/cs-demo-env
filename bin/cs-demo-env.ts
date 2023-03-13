@@ -23,4 +23,4 @@ cdk.Aspects.of(deployStack).add(
   new PermissionsBoundary('arn:aws:iam::863151058727:policy/eo_role_boundary'),
 );
 
-cdk.Tags.of(deployStack).add('contentstack-demo', '' );
+// cdk.Tags.of(deployStack).add('contentstack-demo', '' );
