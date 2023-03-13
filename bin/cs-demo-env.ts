@@ -24,3 +24,9 @@ cdk.Aspects.of(deployStack).add(
 );
 
 // cdk.Tags.of(deployStack).add('contentstack-demo', '' );
+
+
+// Add tags to all constructs in the stack
+cdk.Tags.of(deployStack).add('stage', "demo");
+cdk.Tags.of(deployStack).add('mach-cc:stage', "demo");
+cdk.Tags.of(deployStack).add('stack', deployStack.stackName);
