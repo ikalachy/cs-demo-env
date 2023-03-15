@@ -77,6 +77,7 @@ async function proxyPOST(event) {
       // transformRequest: (formData) => formData,
     });
   } catch (error) {
+    console.log("POST error:", JSON.stringify(error));
     return response(500, { errorStatus: error.status, errorMessage: error?.message });
   }
 
