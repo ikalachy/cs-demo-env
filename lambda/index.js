@@ -62,8 +62,6 @@ async function proxyGET(event) {
 async function proxyPOST(event) {
   const url = constructProxyUrl(event);
   const headers = constructHeaders(event);
-  const body =
-    event.path === '/assets' ? Buffer.from(event.body, 'base64') : JSON.parse(event?.body);
 
   // console.log('POST url', url);
   // console.log('POST headers', JSON.stringify(headers));
@@ -72,12 +70,14 @@ async function proxyPOST(event) {
   let result = {};
 
   try {
+    const body =
+      event.path === '/assets' ? Buffer.from(event.body, 'base64') : JSON.parse(event?.body);
     result = await axios.post(url, body, {
       headers: headers,
       // transformRequest: (formData) => formData,
     });
   } catch (error) {
-    console.log("POST error:", JSON.stringify(error));
+    console.log('POST error:', JSON.stringify(error));
     return response(500, { errorStatus: error.status, errorMessage: error?.message });
   }
 
