@@ -1,5 +1,5 @@
 import * as cdk from 'aws-cdk-lib';
-import { Stack, StackProps } from 'aws-cdk-lib';
+import { Duration, Stack, StackProps } from 'aws-cdk-lib';
 import { Construct } from 'constructs';
 import { Function } from 'aws-cdk-lib/aws-lambda';
 import * as secretsmanager from 'aws-cdk-lib/aws-secretsmanager';
@@ -43,6 +43,8 @@ export class ContentstackIntegrationEnvStack extends Stack {
         code: cdk.aws_lambda.Code.fromAsset('./lambda'),
         handler: 'index.handler',
         runtime: cdk.aws_lambda.Runtime.NODEJS_16_X,
+        timeout: Duration.seconds(60),
+        memorySize: 512,
         environment: {
           CONTENTSTACK_API_KEY: csApiTokens
             .secretValueFromJson('CONTENTSTACK_API_KEY')
