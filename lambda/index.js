@@ -20,7 +20,7 @@ const requestHandlers = {
 };
 
 exports.handler = async function (event, context) {
-  console.log('request: ' + JSON.stringify(event));
+  // console.log('request: ' + JSON.stringify(event));
 
   let httpMethod = event['httpMethod'];
 
